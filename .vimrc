@@ -30,7 +30,7 @@ Plugin 'preservim/nerdtree'
 " Status bar at bottom of vim editor 
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-AirlineTheme violet
+let g:airline_theme='violet'
 
 """"""""" Vim Keybinds and Settings """""""""
 
