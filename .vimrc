@@ -18,8 +18,8 @@ Plugin 'tpope/vim-commentary'
 " Does correct indentation for brackets etc in python
 Plugin 'vim-scripts/indentpython.vim'
 
-" Syntax checker
-Plugin 'vim-syntastic/syntastic'
+" Syntax checker - off by default
+" Plugin 'vim-syntastic/syntastic'
 
 " Auto-complete Python
 Plugin 'davidhalter/jedi-vim'
