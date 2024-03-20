@@ -32,6 +32,9 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 let g:airline_theme='violet'
 
+" Markdown Preview Plugin
+Plugin 'iamcco/markdown-preview.nvim'
+
 """"""""" Vim Keybinds and Settings """""""""
 
 " set space to toggle fold
