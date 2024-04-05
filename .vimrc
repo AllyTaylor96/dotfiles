@@ -49,7 +49,7 @@ Plugin 'danilo-augusto/vim-afterglow'
 set foldmethod=indent
 nnoremap <space> za
 vnoremap <space> zf
-set foldnestmax=2
+set foldnestmax=3
 
 " switch between tabs with F8 and F9
 map <F8> :tabp<cr>
