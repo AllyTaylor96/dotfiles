@@ -21,8 +21,15 @@ Plugin 'vim-scripts/indentpython.vim'
 " Syntax checker - off by default
 " Plugin 'vim-syntastic/syntastic'
 
-" Auto-complete Python
+" Auto-complete Python - turns off preview docstring by default
 Plugin 'davidhalter/jedi-vim'
+autocmd FileType python setlocal completeopt-=preview
+
+" Set auto-complete to tab
+Plugin 'ervandew/supertab'
+
+" Add indent lines
+Plugin 'Yggdroot/indentLine'
 
 " Enable NERDTree file manager
 Plugin 'preservim/nerdtree'
