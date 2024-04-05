@@ -10,7 +10,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Enable folding for python files
-Plugin 'tmhedberg/SimpylFold'
+" Plugin 'tmhedberg/SimpylFold'
 
 " Comment out code - gcc for line, gc in visual mode
 Plugin 'tpope/vim-commentary'
@@ -45,8 +45,11 @@ Plugin 'danilo-augusto/vim-afterglow'
 
 """"""""" Vim Keybinds and Settings """""""""
 
-" set space to toggle fold
+" set space to toggle fold on indent
+set foldmethod=indent
 nnoremap <space> za
+vnoremap <space> zf
+set foldnestmax=2
 
 " switch between tabs with F8 and F9
 map <F8> :tabp<cr>
