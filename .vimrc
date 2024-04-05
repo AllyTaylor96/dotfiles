@@ -31,16 +31,17 @@ Plugin 'ervandew/supertab'
 " Add indent lines
 Plugin 'Yggdroot/indentLine'
 
-" Enable NERDTree file manager
-Plugin 'preservim/nerdtree'
+" Enable NERDTree file manager - off by default
+" Plugin 'preservim/nerdtree'
 
 " Status bar at bottom of vim editor 
 Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-let g:airline_theme='violet'
+
+" Make it look nice
+Plugin 'danilo-augusto/vim-afterglow'
 
 " Markdown Preview Plugin
-Plugin 'iamcco/markdown-preview.nvim'
+" Plugin 'iamcco/markdown-preview.nvim'
 
 """"""""" Vim Keybinds and Settings """""""""
 
@@ -76,7 +77,8 @@ syntax on
 set nu
 
 " map NERDTree access to F2
-map <F2> :NERDTreeToggle<CR>
+" map <F2> :NERDTreeToggle<CR>
+
 
 " stops text from autowrapping at end of line
 set textwidth=0
@@ -94,3 +96,9 @@ call vundle#end()
 
 " below line means vim will check filetype, load plugins and indent settings for that
 filetype plugin indent on
+
+" Set colorscheme so it looks nice
+let g:afterglow_italic_comments=1
+let g:afterglow_inherit_background=1
+colorscheme afterglow
+
