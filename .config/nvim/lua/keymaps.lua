@@ -21,4 +21,3 @@ vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 --- Set double space to toggle fold on indent
 vim.keymap.set("n", "<leader><leader>", "za")
 
-
