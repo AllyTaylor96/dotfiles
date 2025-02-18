@@ -21,3 +21,6 @@ vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 --- Set double space to toggle fold on indent
 vim.keymap.set("n", "<leader><leader>", "za")
 
+--- Switch windows quicker with F8 and F9
+vim.keymap.set("n", "<F8>", "<C-w>h")
+vim.keymap.set("n", "<F9>", "<C-w>l")
