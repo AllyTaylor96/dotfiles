@@ -45,3 +45,9 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
 }) -- return to last edit position when opening files
 
+-- Treat ujson files as json files
+vim.filetype.add({
+  extension = {
+    ujson = "json",
+  },
+})
