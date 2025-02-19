@@ -16,6 +16,9 @@ vim.opt.textwidth = 0
 vim.opt.wrapmargin = 0
 vim.opt.wrap = true
 
+-- set indent fold to be on spacebar
+vim.opt.foldmethod = "indent"
+
 vim.opt.ignorecase = true -- ignore case when searching
 vim.opt.smartcase = true -- unless capital letter in search
 
