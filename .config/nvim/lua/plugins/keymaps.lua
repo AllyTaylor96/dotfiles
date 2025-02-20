@@ -27,3 +27,8 @@ vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<cr>")
 
 -- Flick on/off comments (space /)
 vim.keymap.set({"n", "v"}, "<leader>/", ":CommentToggle<cr>")
+
+--- LSP - Turn off and on with F7
+
+vim.keymap.set("n", "<F7>", ":LspStop")
+
