@@ -54,3 +54,4 @@ vim.filetype.add({
     ujson = "json",
   },
 })
+
