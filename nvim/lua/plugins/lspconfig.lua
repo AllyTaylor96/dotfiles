@@ -4,13 +4,11 @@ return {
 		-- Reserve a space in the gutter
 		vim.opt.signcolumn = 'yes'
 
-		-- Add cmp_nvim_lsp capabilities settings to lspconfig
-		local lspconfig_defaults = require('lspconfig').util.default_config
-		lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-			'force',
-			lspconfig_defaults.capabilities,
-			require('cmp_nvim_lsp').default_capabilities()
-		)
+		-- Add cmp_nvim_lsp capabilities to LSP clients
+		local capabilities = require('cmp_nvim_lsp').default_capabilities()
+		vim.lsp.config('*', {
+			capabilities = capabilities,
+		})
 
 		-- Enable features when LSP is active
 		vim.api.nvim_create_autocmd('LspAttach', {
@@ -31,7 +29,8 @@ return {
 			end,
 		})
 
-		-- Setup language servers
-		require'lspconfig'.jedi_language_server.setup{}
+		-- Enable LSP servers (nvim-lspconfig provides the configs automatically)
+		vim.lsp.enable('jedi_language_server')
+		vim.lsp.enable('bashls')
 	end,
 }

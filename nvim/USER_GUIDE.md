@@ -2,6 +2,36 @@
 
 This guide explains the functionality and keybindings configured in this NeoVim setup.
 
+---
+
+## Requirements
+
+To use this configuration at full capacity, ensure the following are installed:
+
+### Core Requirements
+- **Neovim 0.11+** - For modern LSP support
+- **Git** - Required by lazy.nvim plugin manager
+- **Node.js** - Required for Copilot and Bash LSP
+  - Debian/Ubuntu: `sudo apt install nodejs npm`
+  - macOS: `brew install node`
+  - Other: See [nodejs.org](https://nodejs.org)
+
+### Language Servers (for LSP features)
+- **Python**: `pip3 install jedi-language-server`
+- **Bash**: `npm install -g bash-language-server`
+
+### Optional (Enhanced Features)
+- **ripgrep** - Required for Telescope live grep
+  - Debian/Ubuntu: `sudo apt install ripgrep`
+  - macOS: `brew install ripgrep`
+- **fd** - Faster file finding with Telescope (optional)
+  - Debian/Ubuntu: `sudo apt install fd-find`
+  - macOS: `brew install fd`
+- **Nerd Font** - For icons in file tree and status line
+  - Download from [nerdfonts.com](https://www.nerdfonts.com/)
+
+---
+
 ## Leader Key
 
 The leader key is set to **`<Space>`** (spacebar). Most custom commands start with the leader key.
@@ -71,12 +101,31 @@ These keybindings are available when a language server is active for the file.
 - `F4` - Show available code actions
 
 ### Autocompletion (nvim-cmp)
-Autocomplete appears automatically when you start typing or press `Tab`.
+Autocomplete appears automatically as you type in files with active LSP servers.
 
 - `Tab` - Trigger/navigate to next completion item or expand snippet
 - `Shift+Tab` - Navigate to previous completion item
 - `Ctrl+E` - Abort/close completion menu
 - `Enter` - Confirm selected completion
+
+### GitHub Copilot
+AI-powered code suggestions appear as gray "ghost text" inline as you type.
+
+**First-time setup:**
+1. Ensure you have a GitHub Copilot subscription
+2. Run `:Copilot auth` in Neovim to authenticate
+3. Check status with `:Copilot status`
+
+**Usage:**
+- **Automatic**: Suggestions appear as gray text while typing
+- `Ctrl+Space` - Accept the current Copilot suggestion
+- Suggestions update in real-time as you type
+
+**Commands:**
+- `:Copilot enable` - Enable Copilot
+- `:Copilot disable` - Disable Copilot
+- `:Copilot status` - Check Copilot status
+- `:Copilot panel` - Open Copilot panel with alternative suggestions
 
 ---
 
@@ -120,10 +169,17 @@ Autocomplete appears automatically when you start typing or press `Tab`.
 - **LSP**: Jedi Language Server (autocomplete, go-to-definition, etc.)
 - **Indentation**: 4 spaces
 - **Formatting**: Available via LSP (F3)
+- **Copilot**: Full support for AI suggestions
+
+### Bash/Shell Scripts
+- **LSP**: Bash Language Server (autocomplete, diagnostics)
+- **File types**: `.sh`, `.bash` files
+- **Copilot**: Full support for AI suggestions
 
 ### JavaScript/HTML/CSS/Lua
 - **Indentation**: Auto-switches to 2 spaces
 - **File detection**: Automatic
+- **Copilot**: Full support for AI suggestions
 
 ### JSON
 - **Special**: `.ujson` files treated as JSON
@@ -177,25 +233,38 @@ Autocomplete appears automatically when you start typing or press `Tab`.
 - **nvim-lspconfig**: Language server integration
 - **nvim-cmp**: Autocompletion engine
 - **LuaSnip**: Snippet engine
+- **Copilot.vim**: GitHub Copilot AI code suggestions
 
 ---
 
 ## Troubleshooting
 
 **LSP not working?**
-- Ensure Jedi language server is installed: `pip install jedi-language-server`
+- Ensure language servers are installed:
+  - Python: `pip3 install jedi-language-server`
+  - Bash: `npm install -g bash-language-server`
+- Check LSP status with `:LspInfo` when file is open
+- Verify Neovim version is 0.11+ with `:version`
+
+**Copilot not showing suggestions?**
+- Ensure Node.js is installed: `node --version`
+- Authenticate with `:Copilot auth`
+- Check status with `:Copilot status`
+- If disabled, enable with `:Copilot enable`
+- Suggestions appear as gray text - press `Ctrl+Space` to accept
 
 **Telescope not finding files?**
 - Make sure you're in a project directory
 - Use `<Space>fs` for all files or `<Space>fp` for git-tracked files only
 
-**Telescope errors when live_grepping using Telescope?**
-- `ripgrep` is required for live grepping to work - can install using either `brew install ripgrep` (macOS) or `sudo apt-get install ripgrep` (Linux)
+**Telescope errors when live_grepping?**
+- `ripgrep` is required for live grepping to work - can install using either `brew install ripgrep` (macOS) or `sudo apt install ripgrep` (Linux)
 
 **File tree not showing?**
 - Press `<Space>e` to toggle it
 - Use `Ctrl+W` then `h` to focus the tree
 
 **Autocomplete not appearing?**
-- Press `Tab` to trigger manually
-- Autocomplete is disabled by default and triggers on Tab or when typing
+- Autocomplete is automatic when LSP is active
+- Press `Tab` to manually trigger if needed
+- Ensure you have an LSP server running for the file type (check with `:LspInfo`)

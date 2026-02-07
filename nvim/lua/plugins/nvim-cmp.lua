@@ -28,10 +28,6 @@ return {
 				end
 			},
 
-			completion = {
-				autocomplete = false
-			},
-
 			mapping = cmp.mapping.preset.insert ({
 				["<Tab>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then

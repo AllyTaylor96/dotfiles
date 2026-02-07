@@ -1,6 +1,6 @@
 -- Load core configuration
 require("config")
 
--- Load plugin manager and plugins
-require("plugins")
+-- Bootstrap and setup lazy.nvim plugin manager
+require("lazy-setup")
 
