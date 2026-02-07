@@ -1,62 +1,115 @@
-""""""""" Initial setup of both vim + vundle """""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vundle Plugin Manager Setup
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-""""""""" Vundle Plugins """""""""
-
 " Vundle - package manager
 Plugin 'gmarik/Vundle.vim'
 
-" Enable folding for python files
-" Plugin 'tmhedberg/SimpylFold'
-
-" Comment out code - gcc for line, gc in visual mode
+" Comment out code - gc in visual mode, gcc for line
 Plugin 'tpope/vim-commentary'
 
-" Does correct indentation for brackets etc in python
+" Python indentation
 Plugin 'vim-scripts/indentpython.vim'
 
-" Syntax checker - off by default
-" Plugin 'vim-syntastic/syntastic'
-
-" Auto-complete Python - turns off preview docstring by default
+" Auto-complete Python
 Plugin 'davidhalter/jedi-vim'
-autocmd FileType python setlocal completeopt-=preview
 
-" Set auto-complete to tab
+" Tab completion
 Plugin 'ervandew/supertab'
 
-" Add indent lines
+" Visual indent lines
 Plugin 'Yggdroot/indentLine'
 
-" Enable NERDTree file manager - off by default
-" Plugin 'preservim/nerdtree'
-
-" Status bar at bottom of vim editor 
+" Status bar
 Plugin 'vim-airline/vim-airline'
 
-" Make it look nice
+" Color scheme
 Plugin 'danilo-augusto/vim-afterglow'
 
-" Markdown Preview Plugin
-" Plugin 'iamcco/markdown-preview.nvim'
+call vundle#end()
+filetype plugin indent on
 
-""""""""" Vim Keybinds and Settings """""""""
 
-" set space to toggle fold on indent
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Core Vim Options
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Encoding
+set encoding=utf-8
+
+" Line numbers
+set number
+set relativenumber
+
+" Indentation defaults (4 spaces)
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+
+" Show tabs and trailing whitespace
+set list
+
+" Text wrapping (soft wrap, no auto line breaks)
+set textwidth=0
+set wrapmargin=0
+set wrap
+
+" Code folding
 set foldmethod=indent
-nnoremap <space> za
-vnoremap <space> zf
 set foldnestmax=3
 
-" switch between tabs with F8 and F9
+" Search settings
+set ignorecase
+set smartcase
+set nohlsearch
+set incsearch
+
+" Scrolling
+set scrolloff=8
+set sidescrolloff=8
+
+" Backspace behavior
+set backspace=indent,eol,start
+
+" Clipboard access
+set clipboard=unnamed
+
+" Syntax highlighting
+syntax on
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Keybindings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Leader key (spacebar)
+let mapleader = " "
+
+" Fold toggle with spacebar
+nnoremap <leader><leader> za
+vnoremap <leader><leader> zf
+
+" Switch between tabs with F8 and F9
 map <F8> :tabp<cr>
 map <F9> :tabn<cr>
 
-" set python-specific tab lengths and settings
-au BufNewFile,BufRead *.py
+" Yank to clipboard
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Autocommands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Python-specific settings
+autocmd BufNewFile,BufRead *.py
         \ set tabstop=4 |
         \ set softtabstop=4 |
         \ set shiftwidth=4 |
@@ -65,42 +118,34 @@ au BufNewFile,BufRead *.py
         \ set autoindent |
         \ set fileformat=unix
 
-" highlight extra white space with red
-highlight BadWhiteSpace ctermbg=red guibg=darkred
-au BufRead, BufNewFile *.py,*.pyw,*.c,*.h match BadWhiteSpace /\s\+$/
+" JavaScript/HTML/CSS formatting (2 spaces)
+autocmd BufNewFile,BufRead *.js,*.html,*.css
+        \ set tabstop=2 |
+        \ set softtabstop=2 |
+        \ set shiftwidth=2
 
-" self explanatory
-set encoding=utf-8
-
-" add syntax highlighting for python (so Class, def etc will be highlighted)
+" Python syntax highlighting
 autocmd BufRead,BufNewFile *.py let python_highlight_all=1
-syntax on
 
-" turn on line numbers
-set nu
+" Highlight trailing whitespace
+highlight BadWhiteSpace ctermbg=red guibg=darkred
+autocmd BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhiteSpace /\s\+$/
 
-" map NERDTree access to F2
-" map <F2> :NERDTreeToggle<CR>
+" Return to last edit position when opening files
+autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
 
 
-" stops text from autowrapping at end of line
-set textwidth=0
-set wrapmargin=0
-set wrap
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin Configuration
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" set it so that backspace will delete line if used at start of line
-set backspace=indent,eol,start
+" Jedi-vim: disable preview window
+autocmd FileType python setlocal completeopt-=preview
 
-" try and access clipboard - may not work
-set clipboard=unnamed
-
-" end vundle call
-call vundle#end()
-
-" below line means vim will check filetype, load plugins and indent settings for that
-filetype plugin indent on
-
-" Set colorscheme so it looks nice
+" Afterglow color scheme
 let g:afterglow_italic_comments=1
 let g:afterglow_inherit_background=1
 colorscheme afterglow
