@@ -58,11 +58,6 @@ if [ -d "$DOTFILES_DIR/nvim" ]; then
     create_symlink "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
 fi
 
-# Symlink .config/nvim if it exists separately
-if [ -d "$DOTFILES_DIR/.config/nvim" ]; then
-    create_symlink "$DOTFILES_DIR/.config/nvim" "$HOME/.config/nvim"
-fi
-
 echo ""
 echo "Dotfiles installation complete!"
 echo ""
