@@ -117,9 +117,9 @@ AI-powered code suggestions appear as gray "ghost text" inline as you type.
 3. Check status with `:Copilot status`
 
 **Usage:**
-- **Automatic**: Suggestions appear as gray text while typing
+- **Not on by default**: to trigger a suggestion to appear as gray text, hit `Ctrl+Enter` while typing
 - `Ctrl+Space` - Accept the current Copilot suggestion
-- Suggestions update in real-time as you type
+- By limiting auto-firing, it hopefully prompts you to **use your brain** a little more
 
 **Commands:**
 - `:Copilot enable` - Enable Copilot
@@ -160,6 +160,9 @@ AI-powered code suggestions appear as gray "ghost text" inline as you type.
 ### Code Folding
 - **Method**: Based on indentation
 - **Toggle**: `<Space><Space>`
+- **Unfold all levels**: `zR`
+- **Unfold one level**: `zo`
+- **Fold one level**: `zc`
 
 ---
 
