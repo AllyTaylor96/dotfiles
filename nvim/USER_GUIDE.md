@@ -117,7 +117,7 @@ AI-powered code suggestions appear as gray "ghost text" inline as you type.
 3. Check status with `:Copilot status`
 
 **Usage:**
-- **Not on by default**: to trigger a suggestion to appear as gray text, hit `Ctrl+Enter` while typing
+- **Not on by default**: to trigger a suggestion to appear as gray text, hit `Ctrl+j` while typing
 - `Ctrl+Space` - Accept the current Copilot suggestion
 - By limiting auto-firing, it hopefully prompts you to **use your brain** a little more
 
