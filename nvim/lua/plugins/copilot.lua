@@ -8,7 +8,7 @@ return {
 		vim.api.nvim_set_keymap("i", "<C-Space>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
     -- Disable by default
     vim.g.copilot_filetypes = {["*"] = false,}
-    -- Explicitly request for copilot suggestions on Ctrl-Enter
-    vim.keymap.set('i', '<C-CR>', '<Plug>(copilot-suggest)')
+    -- Explicitly request for copilot suggestions on Ctrl-j
+    vim.keymap.set('i', '<C-j>', '<Plug>(copilot-suggest)')
 	end,
 }
