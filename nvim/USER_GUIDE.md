@@ -20,6 +20,9 @@ To use this configuration at full capacity, ensure the following are installed:
 - **Python**: `pip3 install jedi-language-server`
 - **Bash**: `npm install -g bash-language-server`
 
+### Formatters (for F3 formatting)
+- **Python**: `pip3 install ruff` (recommended) or `pip3 install black`
+
 ### Optional (Enhanced Features)
 - **ripgrep** - Required for Telescope live grep
   - Debian/Ubuntu: `sudo apt install ripgrep`
@@ -97,7 +100,7 @@ These keybindings are available when a language server is active for the file.
 
 **Code Actions:**
 - `F2` - Rename symbol under cursor
-- `F3` - Format document (normal) or selection (visual)
+- `F3` - Format document (uses LSP if available; Python falls back to ruff/black)
 - `F4` - Show available code actions
 
 ### Autocompletion (nvim-cmp)
@@ -171,7 +174,7 @@ AI-powered code suggestions appear as gray "ghost text" inline as you type.
 ### Python
 - **LSP**: Jedi Language Server (autocomplete, go-to-definition, etc.)
 - **Indentation**: 4 spaces
-- **Formatting**: Available via LSP (F3)
+- **Formatting**: `F3` (uses LSP if available; Python falls back to ruff/black)
 - **Copilot**: Full support for AI suggestions
 
 ### Bash/Shell Scripts
