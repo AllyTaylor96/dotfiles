@@ -1,5 +1,11 @@
 # How to work
 
+Quickstart (Linux/macOS):
+
+- `./bootstrap.sh`
+
+Manual:
+
 This requires the installation of `jedi-language-server`:
 
 - `pip install -U jedi-language-server`
