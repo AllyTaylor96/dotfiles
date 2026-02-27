@@ -98,10 +98,11 @@ These keybindings are available when a language server is active for the file.
 - `gr` - **G**o to **R**eferences (find all uses)
 - `gs` - Show **S**ignature help
 
-**Code Actions:**
+**Actions:**
 - `F2` - Rename symbol under cursor
 - `F3` - Format document (uses LSP if available; Python falls back to ruff/black)
-- `F4` - Show available code actions
+- `<leader>a` - Show available code actions
+- `F4` - Python: run `ruff check` and open the quickfix list (non-Python: code actions)
 
 ### Autocompletion (nvim-cmp)
 Autocomplete appears automatically as you type in files with active LSP servers.
@@ -175,6 +176,7 @@ AI-powered code suggestions appear as gray "ghost text" inline as you type.
 - **LSP**: Jedi Language Server (autocomplete, go-to-definition, etc.)
 - **Indentation**: 4 spaces
 - **Formatting**: `F3` (uses LSP if available; Python falls back to ruff/black)
+- **Linting**: `F4` (runs `ruff check` and opens quickfix)
 - **Copilot**: Full support for AI suggestions
 
 ### Bash/Shell Scripts
