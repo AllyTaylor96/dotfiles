@@ -1,40 +1,4 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vundle Plugin Manager Setup
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" Vundle - package manager
-Plugin 'gmarik/Vundle.vim'
-
-" Comment out code - gc in visual mode, gcc for line
-Plugin 'tpope/vim-commentary'
-
-" Python indentation
-Plugin 'vim-scripts/indentpython.vim'
-
-" Auto-complete Python
-Plugin 'davidhalter/jedi-vim'
-
-" Tab completion
-Plugin 'ervandew/supertab'
-
-" Visual indent lines
-Plugin 'Yggdroot/indentLine'
-
-" Status bar
-Plugin 'vim-airline/vim-airline'
-
-" Color scheme
-Plugin 'danilo-augusto/vim-afterglow'
-
-call vundle#end()
-filetype plugin indent on
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Core Vim Options
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -137,16 +101,4 @@ autocmd BufReadPost *
         \   exe "normal! g`\"" |
         \ endif
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin Configuration
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Jedi-vim: disable preview window
-autocmd FileType python setlocal completeopt-=preview
-
-" Afterglow color scheme
-let g:afterglow_italic_comments=1
-let g:afterglow_inherit_background=1
-colorscheme afterglow
 
