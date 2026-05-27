@@ -27,5 +27,11 @@ vim.opt.incsearch = true -- incrementally highlight searches as you type
 
 vim.opt.termguicolors = true -- enable true color support
 
+
 vim.opt.scrolloff = 8 -- minimum number of lines to keep above and below the cursor
 vim.opt.sidescrolloff = 8 --minimum number of columns to keep above and below the cursor
+
+-- Make standard backgrounds transparent
+vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE", ctermbg = "NONE" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE", ctermbg = "NONE" })
