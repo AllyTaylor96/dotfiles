@@ -29,3 +29,6 @@ vim.opt.termguicolors = true -- enable true color support
 
 vim.opt.scrolloff = 8 -- minimum number of lines to keep above and below the cursor
 vim.opt.sidescrolloff = 8 --minimum number of columns to keep above and below the cursor
+
+vim.opt.cursorcolumn = true -- highlight the current column
+vim.opt.cursorline = true -- highlight the current line
