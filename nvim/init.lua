@@ -1,6 +1,4 @@
--- Load core configuration
-require("config")
-
--- Bootstrap and setup lazy.nvim plugin manager
-require("lazy-setup")
-
+require("config.options")
+require("config.lazy")
+require("config.keymaps")
+require("config.autocmds")
