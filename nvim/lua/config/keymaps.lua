@@ -1,26 +1,17 @@
---- Core keymaps (non-plugin-specific)
+-- Terminal keymaps
+vim.keymap.set('t', '<Esc>', "<C-\\><C-n>")
+vim.keymap.set('t', '<C-w>', "<C-\\><C-n><C-w>")
 
--- Set Neovim wide leader key to be 'spacebar' - all commands will be 'space' then '<KEY>'
-vim.g.mapleader = " "
+-- Minimize terminal split
+vim.keymap.set('n', '<C-g>', "3<C-w>_")
 
---- Switching between buffers/tabs
+-- Up / down with line wrap
+vim.keymap.set('n', '<Up>', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', '<Down>', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- Next buffer/tab
-vim.keymap.set("n", "<leader>n", ":bn<cr>")
-
--- Previous buffer/tab
-vim.keymap.set("n", "<leader>p", ":bp<cr>")
-
--- Close buffer/tab
-vim.keymap.set("n", "<leader>x", ":bd<cr>")
-
-
---- Yank to clipboard
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-
---- Set double space to toggle fold on indent
-vim.keymap.set("n", "<leader><leader>", "za")
-
---- Switch windows quicker with F8 and F9
-vim.keymap.set("n", "<F8>", "<C-w>h")
-vim.keymap.set("n", "<F9>", "<C-w>l")
+-- LSP keybindings
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {desc = 'Rename Symbol'})
+vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {desc = 'Goto Definition'})
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {desc = 'Code Action'})
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, {desc = 'Hover Documentation'})
+vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format, {desc = 'Format Code'})

@@ -1,34 +1,52 @@
---- Core Neovim options (non-plugin-specific)
+vim.g.loaded_python3_provider = 0
 
-vim.opt.encoding = "utf-8" -- set encoding
-vim.opt.nu = true -- enable line numbers
-vim.opt.relativenumber = true -- relative line numbers
+local opt = vim.opt
 
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true -- convert tabs to spaces
-vim.opt.autoindent = true -- auto indentation
-vim.opt.list = true -- show tab characters and trailing whitespace
+opt.encoding = "utf-8"
+opt.fileencoding = "utf-8"
 
--- controversial... set text wrapping to soft wrap at end of window
-vim.opt.textwidth = 0
-vim.opt.wrapmargin = 0
-vim.opt.wrap = true
+opt.clipboard = "unnamedplus"
+opt.completeopt = "menu,menuone,noselect"
+opt.mouse = "a"
 
--- set indent fold to be on spacebar
-vim.opt.foldmethod = "indent"
+opt.autowrite = true
+opt.confirm = true
+opt.inccommand = "nosplit"
+opt.laststatus = 0
+opt.list = true
 
-vim.opt.ignorecase = true -- ignore case when searching
-vim.opt.smartcase = true -- unless capital letter in search
+opt.hlsearch = false
+opt.ignorecase = true
+opt.smartcase = true
 
-vim.opt.hlsearch = false -- do not highlight all matches on previous search pattern
-vim.opt.incsearch = true -- incrementally highlight searches as you type
+opt.cursorline = true
+opt.number = true
+opt.relativenumber = true
 
-vim.opt.termguicolors = true -- enable true color support
+opt.splitbelow = true
+opt.splitright = true
 
-vim.opt.scrolloff = 8 -- minimum number of lines to keep above and below the cursor
-vim.opt.sidescrolloff = 8 --minimum number of columns to keep above and below the cursor
+opt.scrolloff = 4
+opt.sidescrolloff = 8
+opt.winminwidth = 5
 
-vim.opt.cursorcolumn = true -- highlight the current column
-vim.opt.cursorline = true -- highlight the current line
+opt.expandtab = true
+opt.shiftwidth = 4
+opt.shiftround = true
+opt.tabstop = 4
+
+opt.showmode = false
+opt.signcolumn = "yes"
+opt.termguicolors = true
+opt.hidden = true
+
+opt.undofile = true
+opt.undolevels = 10000
+
+opt.secure = true
+opt.exrc = true
+
+-- Set leader key to space
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>')

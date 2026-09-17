@@ -11,29 +11,24 @@ OS="$(uname -s)"
 
 if have brew; then
   brew update
-  brew install neovim python node ripgrep pipx
+  brew install neovim git ripgrep node python make gcc
 elif [[ "$OS" == "Linux" ]] && have apt-get; then
   sudo apt-get update -y
-  sudo apt-get install -y neovim python3 python3-pip pipx nodejs npm ripgrep
+  sudo apt-get install -y neovim git ripgrep nodejs npm python3 python3-pip make gcc
 else
-  echo "Unsupported OS/package-manager. Install manually: neovim, python3/pip, ruff, jedi-language-server, node/npm, bash-language-server." >&2
+  echo "Unsupported OS/package-manager. Install manually: neovim, git, ripgrep, node/npm, python3/pip, make, a C compiler (gcc/clang)." >&2
   exit 1
 fi
 
-# Python tooling (for F3 format + F4 ruff check, and python LSP)
-if have pipx; then
-  pipx ensurepath >/dev/null 2>&1 || true
-  pipx install ruff >/dev/null 2>&1 || pipx upgrade ruff
-  pipx install jedi-language-server >/dev/null 2>&1 || pipx upgrade jedi-language-server
-  # Optional (only used if ruff is unavailable for formatting)
-  pipx install black >/dev/null 2>&1 || pipx upgrade black
-else
-  python3 -m pip install --user -U ruff jedi-language-server black
+# Python tooling (used by none-ls for linting/formatting)
+if have pip3; then
+  pip3 install --user -U pylint black
+elif have pip; then
+  pip install --user -U pylint black
 fi
 
-# Bash LSP (your config enables bashls)
-if have npm; then
-  npm install -g bash-language-server
-fi
+# Note: the pyright LSP itself, along with any other language servers, is
+# installed and managed automatically by mason.nvim on first launch - no
+# manual step required beyond having node/npm available.
 
-echo "Done. If commands aren't found, ensure ~/.local/bin is on PATH (pipx/pip --user)." 
+echo "Done. Launch nvim and let lazy.nvim/mason.nvim finish installing plugins and language servers."
