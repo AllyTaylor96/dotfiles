@@ -4,15 +4,18 @@ Quickstart (Linux/macOS):
 
 - `./bootstrap.sh`
 
-Manual:
+Manual dependencies:
 
-This requires the installation of `jedi-language-server`:
+- `neovim` (0.10+), `git`, `ripgrep`, `make`, a C compiler (`gcc`/`clang`)
+- `node`/`npm` - required by `mason.nvim` to install/manage the `pyright` language server
+- `python3`/`pip` with `pylint` and `black` installed - used by `none-ls` for Python
+  linting and formatting
 
-- `pip install -U jedi-language-server`
+```
+pip3 install --user -U pylint black
+```
 
-For Python formatting on `<F3>` and linting on `<F4>`, install (one of):
+On first launch, `lazy.nvim` installs all plugins and `mason.nvim` installs
+`pyright` automatically - no manual language server setup required.
 
-- `pip install -U ruff` (recommended; provides both `ruff format` and `ruff check`)
-- `pip install -U black` (formatting only)
-
-May need to fiddle with PATH to get it to work.
+See [USER_GUIDE.md](./USER_GUIDE.md) for keybindings and feature details.

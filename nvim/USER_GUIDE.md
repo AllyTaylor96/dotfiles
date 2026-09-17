@@ -6,31 +6,32 @@ This guide explains the functionality and keybindings configured in this NeoVim 
 
 ## Requirements
 
-To use this configuration at full capacity, ensure the following are installed:
+To use this configuration at full capacity, ensure the following are installed
+(or just run `./bootstrap.sh`):
 
 ### Core Requirements
-- **Neovim 0.11+** - For modern LSP support
+- **Neovim 0.10+** - For modern LSP support
 - **Git** - Required by lazy.nvim plugin manager
-- **Node.js** - Required for Copilot and Bash LSP
-  - Debian/Ubuntu: `sudo apt install nodejs npm`
-  - macOS: `brew install node`
-  - Other: See [nodejs.org](https://nodejs.org)
+- **make** and a **C compiler** (gcc/clang) - Required to build
+  `telescope-fzf-native.nvim` and Treesitter parsers
+- **Node.js/npm** - Required by `mason.nvim` to install and manage the
+  `pyright` language server
 
 ### Language Servers (for LSP features)
-- **Python**: `pip3 install jedi-language-server`
-- **Bash**: `npm install -g bash-language-server`
+- **Python**: `pyright` - installed automatically by `mason.nvim` on first launch
 
-### Formatters (for F3 formatting)
-- **Python**: `pip3 install ruff` (recommended) or `pip3 install black`
+### Linting & Formatting
+- **Python**: `pylint` (diagnostics) and `black` (formatting), wired up via
+  `none-ls.nvim`
+  - `pip3 install --user -U pylint black`
 
-### Optional (Enhanced Features)
+### Required for Search
 - **ripgrep** - Required for Telescope live grep
   - Debian/Ubuntu: `sudo apt install ripgrep`
   - macOS: `brew install ripgrep`
-- **fd** - Faster file finding with Telescope (optional)
-  - Debian/Ubuntu: `sudo apt install fd-find`
-  - macOS: `brew install fd`
-- **Nerd Font** - For icons in file tree and status line
+
+### Optional
+- **Nerd Font** - For icons in the bufferline and status line
   - Download from [nerdfonts.com](https://www.nerdfonts.com/)
 
 ---
@@ -43,93 +44,90 @@ The leader key is set to **`<Space>`** (spacebar). Most custom commands start wi
 
 ## Core Keybindings (Non-Plugin)
 
-### Buffer/Tab Management
-- `<Space>n` - Next buffer/tab
-- `<Space>p` - Previous buffer/tab
-- `<Space>x` - Close current buffer/tab
+### Terminal
+- `<C-s>` - Toggle a floating/split terminal (via toggleterm)
+- `<Esc>` (in terminal mode) - Exit terminal mode back to normal mode
+- `<C-w>` (in terminal mode) - Exit terminal mode and move to another window
+- `<C-g>` - Minimize the current terminal split down to 3 lines
 
-### Window Navigation
-- `F8` - Switch to left window
-- `F9` - Switch to right window
-- `Ctrl+W` then arrow keys - Navigate between windows (Vim default)
+### Movement
+- `<Up>` / `<Down>` - Move by display (wrapped) line instead of file line,
+  unless a count is given (e.g. `5j` still moves 5 real lines)
 
-### Clipboard Operations
-- `<Space>y` - Yank (copy) to system clipboard (normal and visual mode)
+### LSP
+- `K` - Show hover documentation for symbol under cursor
+- `<leader>rn` - Rename symbol under cursor
+- `<leader>gd` - Go to definition
+- `<leader>ca` - Show available code actions
+- `<leader>ff` - Format current buffer (LSP formatting; Python formatting is
+  handled by `black` via none-ls)
 
-### Code Folding
-- `<Space><Space>` - Toggle fold at current line (folds based on indentation)
-- `zo` - Open fold under cursor (Vim default)
-- `zc` - Close fold under cursor (Vim default)
-- `za` - Toggle fold under cursor (Vim default)
+### Misc
+- `<Space>` (normal/visual mode) - No-op, so accidental presses do nothing
+  before a leader sequence is typed
 
 ---
 
 ## Plugin Features & Keybindings
 
 ### File Navigation (Telescope)
-Telescope provides fuzzy finding for files and text.
+Telescope provides fuzzy finding for files, text, and symbols, accelerated by
+`telescope-fzf-native.nvim`.
 
-- `<Space>fs` - **F**ile **S**earch: Fuzzy find files in project
-- `<Space>fp` - **F**ile **P**roject: Fuzzy find git files only
-- `<Space>fz` - **F**ile **Z** (grep): Live grep/search text across all files
-- `<Space>fo` - **F**ile **O**ld: Fuzzy find recently opened files
+- `<leader>sf` - Find git-tracked files in the project
+- `<leader><space>` - Find/switch between open buffers
+- `<leader>sg` - Live grep across the project (requires `ripgrep`)
+- `<leader>ss` - Search LSP document symbols (current buffer)
+- `<leader>sw` - Search LSP workspace symbols
 
-### File Tree (NvimTree)
-File explorer sidebar for browsing project structure.
+### Buffers (Bufferline)
+Tab-like display of open buffers at the top of the window.
 
-- `<Space>e` - Toggle file tree sidebar (opens at current file location)
+- `<leader>bp` - Toggle pin on the current buffer
+- `<leader>bP` - Close all unpinned buffers
 
-**Inside NvimTree:**
-- `Enter` - Open file/directory
-- `Ctrl+W` then `h/l` - Switch between tree and editor window
-
-### Comments (nvim-comment)
-- `<Space>/` - Toggle comment on current line or selected lines (normal and visual mode)
+### Terminal (toggleterm)
+- `<C-s>` - Toggle a terminal window (opens at a height of 10 rows)
 
 ### LSP (Language Server Protocol)
-These keybindings are available when a language server is active for the file.
+LSP servers are installed/managed via `mason.nvim` + `mason-lspconfig.nvim`.
+Currently configured: `pyright` (Python).
 
-**Navigation:**
-- `K` - Show hover documentation for symbol under cursor
-- `gd` - **G**o to **d**efinition
-- `gD` - **G**o to **D**eclaration
-- `gi` - **G**o to **i**mplementation
-- `go` - **G**o to type definition
-- `gr` - **G**o to **R**eferences (find all uses)
-- `gs` - Show **S**ignature help
+- See the [Core Keybindings](#core-keybindings-non-plugin) section above for
+  LSP mappings (`K`, `<leader>rn`, `<leader>gd`, `<leader>ca`, `<leader>ff`)
+- Diagnostics are shown inline as virtual text on the current line
 
-**Actions:**
-- `F2` - Rename symbol under cursor
-- `F3` - Format document (uses LSP if available; Python falls back to ruff/black)
-- `<leader>a` - Show available code actions
-- `F4` - Python: run `ruff check` and open the quickfix list (non-Python: code actions)
+### Autocompletion (nvim-cmp + LuaSnip)
+Completion is manually triggered rather than firing automatically as you type.
 
-### Autocompletion (nvim-cmp)
-Autocomplete appears automatically as you type in files with active LSP servers.
+- `<Tab>` - Open completion menu / select next item / expand or jump in a snippet
+- `<Shift-Tab>` - Select previous completion item / jump backward in a snippet
+- `<C-e>` - Abort/close the completion menu
+- `<CR>` - Confirm the selected completion item
 
-- `Tab` - Trigger/navigate to next completion item or expand snippet
-- `Shift+Tab` - Navigate to previous completion item
-- `Ctrl+E` - Abort/close completion menu
-- `Enter` - Confirm selected completion
+Snippets are loaded from the `snippets/` directory (Lua snippet format) via LuaSnip.
 
-### GitHub Copilot
-AI-powered code suggestions appear as gray "ghost text" inline as you type.
+### Linting & Formatting (none-ls)
+- **Python diagnostics**: `pylint`
+- **Python formatting**: `black` (triggered via `<leader>ff`, which calls
+  `vim.lsp.buf.format`)
 
-**First-time setup:**
-1. Ensure you have a GitHub Copilot subscription
-2. Run `:Copilot auth` in Neovim to authenticate
-3. Check status with `:Copilot status`
+### Syntax Highlighting (Treesitter)
+Highlighting and incremental selection for: `c`, `lua`, `vim`, `vimdoc`,
+`query`, `python`, `javascript`.
 
-**Usage:**
-- **Not on by default**: to trigger a suggestion to appear as gray text, hit `Ctrl+j` while typing
-- `Ctrl+Space` - Accept the current Copilot suggestion
-- By limiting auto-firing, it hopefully prompts you to **use your brain** a little more
+- `<C-n>` - Start/expand incremental selection
+- `<C-s>` - Shrink to the next-larger scope (inside an active selection)
+- `<C-m>` - Shrink selection
 
-**Commands:**
-- `:Copilot enable` - Enable Copilot
-- `:Copilot disable` - Disable Copilot
-- `:Copilot status` - Check Copilot status
-- `:Copilot panel` - Open Copilot panel with alternative suggestions
+### Editing Helpers (mini.nvim)
+- **mini.pairs** - Automatically closes brackets/quotes as you type
+- **mini.surround** - Add/change/delete surrounding pairs (see `:h
+  MiniSurround` for its default mappings, e.g. `sa` to add, `sd` to delete,
+  `sr` to replace)
+
+### Indentation Guides (indent-blankline)
+Displays vertical guide lines for indentation levels.
 
 ---
 
@@ -137,60 +135,41 @@ AI-powered code suggestions appear as gray "ghost text" inline as you type.
 
 ### Display
 - **Line numbers**: Enabled (hybrid: absolute for current line, relative for others)
-- **Color scheme**: Catppuccin Macchiato
-- **Syntax highlighting**: Enabled with true color support
+- **Color scheme**: Everforest
+- **Syntax highlighting**: Treesitter-based, with true color support
 - **Status line**: Lualine shows mode, branch, diagnostics, file info
-- **Buffer line**: Tabs at top show open buffers
+- **Buffer line**: Bufferline shows open buffers as tabs at the top
 
 ### Indentation & Formatting
 - **Default**: 4 spaces (tabs converted to spaces)
-- **JavaScript/HTML/CSS/Lua**: 2 spaces (auto-detected)
-- **Auto-indent**: Enabled
-- **Show whitespace**: Tabs and trailing spaces visible
-
-### Text Wrapping
-- **Soft wrap**: Enabled (text wraps at window edge, no hard line breaks)
-- **No text width limit**: Text doesn't auto-wrap while typing
+- **Show whitespace**: Enabled (`list` option on)
 
 ### Search Behavior
 - **Case-insensitive**: Search ignores case...
 - **Smart case**: ...unless you use capital letters
-- **Incremental search**: Highlights matches as you type
-- **No persistent highlight**: Previous search results not highlighted
+- **No persistent highlight**: Previous search results are not highlighted
 
 ### Scrolling
-- **Scroll offset**: Keeps 8 lines visible above/below cursor when scrolling
+- **Scroll offset**: Keeps 4 lines visible above/below cursor, 8 columns to the side
 
-### Code Folding
-- **Method**: Based on indentation
-- **Toggle**: `<Space><Space>`
-- **Unfold all levels**: `zR`
-- **Unfold one level**: `zo`
-- **Fold one level**: `zc`
+### Misc
+- **Clipboard**: Uses the system clipboard by default (`unnamedplus`)
+- **Undo**: Persistent undo history saved to disk (`undofile`)
+- **Splits**: New splits open below/right by default
 
 ---
 
 ## Language Support
 
 ### Python
-- **LSP**: Jedi Language Server (autocomplete, go-to-definition, etc.)
-- **Indentation**: 4 spaces
-- **Formatting**: `F3` (uses LSP if available; Python falls back to ruff/black)
-- **Linting**: `F4` (runs `ruff check` and opens quickfix)
-- **Copilot**: Full support for AI suggestions
+- **LSP**: `pyright` (autocomplete, go-to-definition, hover, etc.)
+- **Linting**: `pylint` via none-ls
+- **Formatting**: `black` via none-ls (`<leader>ff`)
 
-### Bash/Shell Scripts
-- **LSP**: Bash Language Server (autocomplete, diagnostics)
-- **File types**: `.sh`, `.bash` files
-- **Copilot**: Full support for AI suggestions
-
-### JavaScript/HTML/CSS/Lua
-- **Indentation**: Auto-switches to 2 spaces
-- **File detection**: Automatic
-- **Copilot**: Full support for AI suggestions
-
-### JSON
-- **Special**: `.ujson` files treated as JSON
+### Other Filetypes
+- **Treesitter highlighting**: `c`, `lua`, `vim`, `vimdoc`, `query`, `javascript`
+- No dedicated LSP servers are currently configured for these; add entries in
+  `lua/plugins/lsp.lua` (`ensure_installed` + `vim.lsp.enable(...)`) as needed
 
 ---
 
@@ -221,58 +200,57 @@ AI-powered code suggestions appear as gray "ghost text" inline as you type.
 
 ## Tips & Tricks
 
-1. **File tree + split windows**: Open file tree with `<Space>e`, then open files in splits for side-by-side editing
-2. **Quick grep**: Use `<Space>fz` to search for text across entire codebase
-3. **Recent files**: Use `<Space>fo` to quickly reopen recently edited files
-4. **LSP features**: Hover over any Python function/class with `K` to see documentation
-5. **Copy to clipboard**: Select text in visual mode, then `<Space>y` to copy to system clipboard
-6. **Comment blocks**: Select multiple lines with `V`, then `<Space>/` to toggle comments
+1. **Quick grep**: Use `<leader>sg` to search for text across the entire project
+2. **Buffer switching**: Use `<leader><space>` to fuzzy-find and jump between open buffers
+3. **LSP hover**: Hover over any Python function/class with `K` to see documentation
+4. **Pin important buffers**: Use `<leader>bp` to pin a buffer so it survives bulk closes
+5. **Terminal workflow**: Use `<C-s>` to pop open a terminal without leaving Neovim, then `<C-g>` to shrink it out of the way
 
 ---
 
 ## Plugin List
 
-- **Catppuccin**: Color scheme (macchiato variant)
-- **Telescope**: Fuzzy finder and live grep
-- **NvimTree**: File explorer
-- **Bufferline**: Tab-like buffer display at top
-- **Lualine**: Informative status line at bottom
-- **nvim-comment**: Easy commenting
-- **nvim-lspconfig**: Language server integration
-- **nvim-cmp**: Autocompletion engine
-- **LuaSnip**: Snippet engine
-- **Copilot.vim**: GitHub Copilot AI code suggestions
+- **everforest**: Color scheme
+- **nvim-web-devicons**: Filetype icons used by bufferline/lualine
+- **LuaSnip**: Snippet engine (loads snippets from `snippets/`)
+- **nvim-lspconfig** + **mason.nvim** + **mason-lspconfig.nvim**: Language server management (pyright)
+- **nvim-cmp** + **cmp-nvim-lsp** + **cmp_luasnip**: Autocompletion engine
+- **nvim-treesitter**: Syntax highlighting and incremental selection
+- **telescope.nvim** + **telescope-fzf-native.nvim**: Fuzzy finder and live grep
+- **none-ls.nvim**: Linting (pylint) and formatting (black)
+- **toggleterm.nvim**: Integrated terminal
+- **lualine.nvim**: Status line
+- **bufferline.nvim**: Buffer tabs
+- **mini.pairs** / **mini.surround**: Auto-pairing and surround text objects
+- **indent-blankline.nvim**: Indentation guide lines
 
 ---
 
 ## Troubleshooting
 
 **LSP not working?**
-- Ensure language servers are installed:
-  - Python: `pip3 install jedi-language-server`
-  - Bash: `npm install -g bash-language-server`
-- Check LSP status with `:LspInfo` when file is open
-- Verify Neovim version is 0.11+ with `:version`
-
-**Copilot not showing suggestions?**
-- Ensure Node.js is installed: `node --version`
-- Authenticate with `:Copilot auth`
-- Check status with `:Copilot status`
-- If disabled, enable with `:Copilot enable`
-- Suggestions appear as gray text - press `Ctrl+Space` to accept
+- Check `:Mason` to confirm `pyright` is installed
+- Check LSP status with `:LspInfo` or `:checkhealth lsp` when a file is open
+- Verify Neovim version is 0.10+ with `:version`
 
 **Telescope not finding files?**
-- Make sure you're in a project directory
-- Use `<Space>fs` for all files or `<Space>fp` for git-tracked files only
+- Make sure you're in a git repository - `<leader>sf` uses `git_files`, which
+  requires the project to be tracked by git
+- Use `<leader>sg` to grep for text instead
 
-**Telescope errors when live_grepping?**
-- `ripgrep` is required for live grepping to work - can install using either `brew install ripgrep` (macOS) or `sudo apt install ripgrep` (Linux)
+**Telescope live grep errors?**
+- `ripgrep` is required for live grep - install with `brew install ripgrep`
+  (macOS) or `sudo apt install ripgrep` (Linux)
 
-**File tree not showing?**
-- Press `<Space>e` to toggle it
-- Use `Ctrl+W` then `h` to focus the tree
+**telescope-fzf-native fails to build?**
+- Ensure `make` and a C compiler are installed, then run `:Lazy build
+  telescope-fzf-native.nvim`
+
+**Formatting/linting not happening?**
+- Ensure `pylint` and `black` are on your `PATH` (`pip3 install --user -U
+  pylint black`)
+- Check `:NullLsInfo` to confirm sources are attached to the current buffer
 
 **Autocomplete not appearing?**
-- Autocomplete is automatic when LSP is active
-- Press `Tab` to manually trigger if needed
-- Ensure you have an LSP server running for the file type (check with `:LspInfo`)
+- Completion is manual - press `<Tab>` to trigger it
+- Ensure an LSP server is running for the file type (check with `:LspInfo`)
