@@ -1,3 +1,5 @@
+let s:plugins_file = expand('<sfile>:p:h') . '/plugins.vim'
+
 function! s:MakeTags() abort
     if !executable('ctags')
         echoerr 'MakeTags: ctags is not installed or not on PATH'
@@ -47,3 +49,36 @@ function! s:Lint() abort
 endfunction
 
 command! Lint call <SID>Lint()
+
+function! s:VundleSetup() abort
+    let l:vundle_dir = expand('~/.vim/bundle/Vundle.vim')
+    if !filereadable(l:vundle_dir . '/autoload/vundle.vim')
+        if !empty(getftype(l:vundle_dir))
+            echoerr 'VundleSetup: destination already exists but does not contain Vundle: ' . l:vundle_dir
+            return
+        endif
+        if !executable('git')
+            echoerr 'VundleSetup: git is not installed or not on PATH'
+            return
+        endif
+
+        try
+            call mkdir(fnamemodify(l:vundle_dir, ':h'), 'p')
+        catch
+            echoerr 'VundleSetup: could not create the bundle directory: ' . v:exception
+            return
+        endtry
+
+        echomsg 'VundleSetup: downloading Vundle...'
+        let l:output = system('git clone -- https://github.com/VundleVim/Vundle.vim.git ' . shellescape(l:vundle_dir))
+        if v:shell_error
+            echoerr 'VundleSetup: git clone failed: ' . trim(l:output)
+            return
+        endif
+    endif
+
+    execute 'source' fnameescape(s:plugins_file)
+    echomsg 'Vundle is ready. Run :PluginInstall, then restart Vim.'
+endfunction
+
+command! VundleSetup call <SID>VundleSetup()
