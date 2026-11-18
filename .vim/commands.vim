@@ -4,7 +4,7 @@ function! s:MakeTags() abort
         return
     endif
 
-    execute '!ctags -R -f .tags .'
+    execute '!ctags -R --exclude=.env --exclude=env -f .tags .'
     if v:shell_error
         echoerr 'MakeTags: ctags failed with exit status ' . v:shell_error
     endif
