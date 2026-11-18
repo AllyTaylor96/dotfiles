@@ -3,4 +3,5 @@ let s:vim_config_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h') . '/.vim'
 
 execute 'source' fnameescape(s:vim_config_dir . '/options.vim')
 execute 'source' fnameescape(s:vim_config_dir . '/keymaps.vim')
+execute 'source' fnameescape(s:vim_config_dir . '/commands.vim')
 execute 'source' fnameescape(s:vim_config_dir . '/autocmds.vim')

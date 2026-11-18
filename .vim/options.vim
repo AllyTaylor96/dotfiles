@@ -65,3 +65,6 @@ set wildmenu
 
 " File search
 set path+=**
+
+" Tag files
+set tags+=./.tags;
